@@ -1,0 +1,30 @@
+﻿@page "/calculatorpage"
+
+<PageTitle>Calculator</PageTitle>
+
+<h1>Calculator</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="@(() => Modal.Show<CalculatorComponent>("Calculator"))">Open Calculator</button>
+
+@code {
+
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    private int currentCount = 0;
+
+    private void openCalculator()
+    {
+        var options = new ModalOptions
+            {
+                UseCustomLayout = true
+            };
+
+        var parameters = new ModalParameters()
+            .Add(nameof(CalculatorComponent.Message), "Hello Bootstrap modal!!");
+
+        Modal.Show<CalculatorComponent>("Bootstrap Modal", parameters, options);
+    }
+
+}
