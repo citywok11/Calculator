@@ -4,20 +4,26 @@
 
 <h1>Calculator</h1>
 
-<label for="modalcolour">Modal colour:</label>
-<select id="modalcolour" @bind="@selectedcolour">
-    @foreach (var colour in colours)
-    {
-        <option value="@colour.Key">@colour.Value</option>
-    }
-</select>
+<div class="form-group">
+    <label for="modalcolour">Modal colour:</label>
+    <select id="modalcolour" @bind="@selectedcolour" class="form-control">
+        @foreach (var colour in colours)
+        {
+            <option value="@colour.Key">@colour.Value</option>
+        }
+    </select>
+</div>
 
-<select id="textStyle" @bind="@selectedTextStyle">
-    @foreach (var style in textStyles)
-    {
-        <option value="@style.Key">@style.Value</option>
-    }
-</select>
+<div class="form-group">
+    <label for="textStyle">Text style:</label>
+    <select id="textStyle" @bind="@selectedTextStyle" class="form-control">
+        @foreach (var style in textStyles)
+        {
+            <option value="@style.Key">@style.Value</option>
+        }
+    </select>
+</div>
+
 
 <hr />
 
@@ -29,6 +35,12 @@
 
     private string selectedcolour = "";
     private string selectedTextStyle = "";
+
+    protected override void OnInitialized()
+    {
+        selectedcolour = colours.Keys.First();
+        selectedTextStyle = textStyles.Keys.First();
+    }
 
     private Dictionary<string, string> colours = new Dictionary<string, string>
     {
@@ -54,7 +66,6 @@
             };
 
         var parameters = new ModalParameters()
-            .Add(nameof(CalculatorComponent.Message), "Add and Subtract")
             .Add(nameof(CalculatorComponent.Colour), selectedcolour)
             .Add(nameof(CalculatorComponent.Style), selectedTextStyle);
 

@@ -6,7 +6,7 @@
         <!-- Pop it above the backdrop -->
         <div class="modal-content @Colour">
             <div class="modal-header">
-                <h5 class="modal-title">Simple Calculator</h5>
+                <h5 class="@Style">Simple Calculator</h5>
                 <button type="button" class="close" aria-label="Close" @onclick="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -31,7 +31,6 @@
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
-    [Parameter] public string? Message { get; set; }
     [Parameter] public string? Colour { get; set; }
     [Parameter] public string? Style { get; set; }
 
