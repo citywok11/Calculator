@@ -1,31 +1,51 @@
-﻿<h3>CalculatorComponent</h3>
+﻿@inject ISimpleCalculator SimpleCalculator
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="Cancel"></div>
     <div class="modal-dialog" style="z-index: 1050">
         <!-- Pop it above the backdrop -->
-        <div class="modal-content">
+        <div class="modal-content @Colour">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Simple Calculator</h5>
                 <button type="button" class="close" aria-label="Close" @onclick="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>@Message</p>
+                <h1 class="@Style">Total: @Amount</h1>
+                <InputNumber class="@Style" @bind-value="@inputValue" TValue="int" ValueExpression="@(() => inputValue)"></InputNumber>
+                <button class="@Style" @onclick="Add">Add</button>
+                <button class="@Style" @onclick="Subtract">Subtract</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @onclick="Close">Close</button>
+                <button type="button" class="btn btn-secondary Style" @onclick="Close">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 @code {
+
+    public int Amount { get; set; }
+    public int inputValue { get; set; }
+
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
     [Parameter] public string? Message { get; set; }
+    [Parameter] public string? Colour { get; set; }
+    [Parameter] public string? Style { get; set; }
+
 
     private async Task Close() => await BlazoredModal.CloseAsync(ModalResult.Ok(true));
     private async Task Cancel() => await BlazoredModal.CancelAsync();
+
+    private void Add()
+    {
+        Amount = SimpleCalculator.Add(Amount, inputValue);
+    }
+
+    private void Subtract()
+    {
+        Amount = SimpleCalculator.Subtract(Amount, inputValue);
+    }
 }
